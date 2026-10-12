@@ -44,7 +44,8 @@ export const App: React.FC = () => {
     wpm: number, 
     accuracy: number, 
     duration: number, 
-    sessionErrors?: Record<string, number>
+    sessionErrors?: Record<string, number>,
+    keystrokeCounts?: { total: number; correct: number }
   ) => {
     const updated = recordLessonCompletion(
       currentLesson.id, 
@@ -52,7 +53,8 @@ export const App: React.FC = () => {
       wpm, 
       accuracy, 
       duration, 
-      sessionErrors
+      sessionErrors,
+      keystrokeCounts
     );
     setUserProgress(updated);
   };

@@ -1,4 +1,5 @@
 import type { UserProgress, SupportedLanguage } from '../types';
+import { recordGlobalTestContribution } from './globalStats';
 
 
 const STORAGE_KEY = 'indian_typing_tutor_progress_v1';
@@ -20,6 +21,10 @@ const DEFAULT_PROGRESS: UserProgress = {
   },
   totalTimeTrainedSeconds: 0,
   testsTaken: 0,
+  totalKeystrokes: 0,
+  totalCorrectKeystrokes: 0,
+  streakDays: 1,
+  lastActiveDate: new Date().toISOString().slice(0, 10),
   mistypedChars: {},
   recentResults: [],
 };
@@ -32,6 +37,10 @@ export function loadUserProgress(): UserProgress {
     return {
       ...DEFAULT_PROGRESS,
       ...parsed,
+      totalKeystrokes: parsed.totalKeystrokes || 0,
+      totalCorrectKeystrokes: parsed.totalCorrectKeystrokes || 0,
+      streakDays: parsed.streakDays || 1,
+      lastActiveDate: parsed.lastActiveDate || new Date().toISOString().slice(0, 10),
       mistypedChars: parsed.mistypedChars || {},
     };
   } catch (err) {
@@ -54,7 +63,8 @@ export function recordLessonCompletion(
   wpm: number,
   accuracy: number,
   duration: number,
-  sessionErrors?: Record<string, number>
+  sessionErrors?: Record<string, number>,
+  keystrokeCounts?: { total: number; correct: number }
 ): UserProgress {
   const current = loadUserProgress();
   const completed = Array.from(new Set([...current.completedLessons, lessonId]));
@@ -69,6 +79,24 @@ export function recordLessonCompletion(
       updatedMistyped[char] = (updatedMistyped[char] || 0) + count;
     }
   }
+
+  // Calculate Streak
+  const todayStr = new Date().toISOString().slice(0, 10);
+  let streak = current.streakDays || 1;
+  const lastActive = current.lastActiveDate;
+  if (lastActive && lastActive !== todayStr) {
+    const lastDate = new Date(lastActive);
+    const todayDate = new Date(todayStr);
+    const diffDays = Math.floor((todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
+    if (diffDays === 1) {
+      streak += 1;
+    } else if (diffDays > 1) {
+      streak = 1;
+    }
+  }
+
+  const addedTotalKeys = keystrokeCounts ? keystrokeCounts.total : Math.round((wpm * 5 * duration) / 60);
+  const addedCorrectKeys = keystrokeCounts ? keystrokeCounts.correct : Math.round(addedTotalKeys * (accuracy / 100));
 
   const newResult = {
     id: `${Date.now()}`,
@@ -86,11 +114,16 @@ export function recordLessonCompletion(
     bestWpmByLanguage: updatedBest,
     totalTimeTrainedSeconds: current.totalTimeTrainedSeconds + duration,
     testsTaken: current.testsTaken + 1,
+    totalKeystrokes: (current.totalKeystrokes || 0) + addedTotalKeys,
+    totalCorrectKeystrokes: (current.totalCorrectKeystrokes || 0) + addedCorrectKeys,
+    streakDays: streak,
+    lastActiveDate: todayStr,
     mistypedChars: updatedMistyped,
     recentResults: [newResult, ...current.recentResults].slice(0, 20),
   };
 
   saveUserProgress(updated);
+  recordGlobalTestContribution(addedTotalKeys);
   return updated;
 }
 

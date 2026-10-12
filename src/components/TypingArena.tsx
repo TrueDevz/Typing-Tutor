@@ -15,7 +15,13 @@ import confetti from 'canvas-confetti';
 interface TypingArenaProps {
   lesson: Lesson;
   language: SupportedLanguage;
-  onComplete: (wpm: number, accuracy: number, duration: number, sessionErrors?: Record<string, number>) => void;
+  onComplete: (
+    wpm: number, 
+    accuracy: number, 
+    duration: number, 
+    sessionErrors?: Record<string, number>,
+    keystrokeCounts?: { total: number; correct: number }
+  ) => void;
   onReset: () => void;
 }
 
@@ -197,7 +203,13 @@ export const TypingArena: React.FC<TypingArenaProps> = ({
       });
     } catch {}
 
-    onComplete(finalStats.wpm, finalStats.accuracy, duration, finalErrorMap);
+    onComplete(
+      finalStats.wpm, 
+      finalStats.accuracy, 
+      duration, 
+      finalErrorMap, 
+      { total: finalStats.totalTyped, correct: finalStats.correctCount }
+    );
   }, [lesson.content, onComplete]);
 
   // Real-time timer & Countdown check

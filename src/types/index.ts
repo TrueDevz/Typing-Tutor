@@ -62,6 +62,10 @@ export interface UserProgress {
   bestWpmByLanguage: Record<SupportedLanguage, number>;
   totalTimeTrainedSeconds: number;
   testsTaken: number;
+  totalKeystrokes?: number;
+  totalCorrectKeystrokes?: number;
+  streakDays?: number;
+  lastActiveDate?: string;
   mistypedChars?: Record<string, number>;
   recentResults: {
     id: string;
