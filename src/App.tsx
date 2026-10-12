@@ -17,6 +17,8 @@ import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
 import { LegalPage } from './components/LegalPage';
 import { Footer } from './components/Footer';
+import { WindowTitleBar } from './components/WindowTitleBar';
+import { SUPPORTED_LANGUAGES } from './data/languages';
 import { loadUserProgress, recordLessonCompletion } from './utils/storage';
 
 export const App: React.FC = () => {
@@ -103,10 +105,15 @@ export const App: React.FC = () => {
     }
   };
 
+  const currentLangObj = SUPPORTED_LANGUAGES.find((l) => l.id === currentLanguage);
+
   return (
     <div className={`min-h-screen flex flex-col transition-colors duration-200 ${getThemeWrapperClass()}`}>
+      {/* Native Windows Desktop Titlebar */}
+      <WindowTitleBar currentLanguageName={currentLangObj?.name} />
+
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
+      <header className="sticky top-8 z-40 w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div 
             onClick={() => setActiveTab('arena')} 
