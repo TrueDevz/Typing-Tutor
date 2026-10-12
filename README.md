@@ -150,13 +150,44 @@ npm run dev
 
 Visit `http://localhost:5173` in your browser.
 
-### Building for Production
+### Building for Web Production
 
 ```bash
 npm run build
 ```
 
 The production output will be generated inside the `dist/` directory, ready to deploy to GitHub Pages, Vercel, Firebase Hosting, or Netlify.
+
+---
+
+## 💻 Desktop Application & Complete Offline Installer (Tauri v2)
+
+InScript Indic Typing Tutor can be built as a **100% offline native desktop application** with zero internet dependency using [Tauri v2](https://v2.tauri.app/).
+
+### Run Desktop App Locally
+
+```bash
+# Start desktop app in development mode
+npm run tauri dev
+```
+
+### Build Desktop Offline Installer Locally
+
+```bash
+# Requires Rust toolchain (https://rustup.rs/)
+npm run tauri:build
+```
+
+The installer will be generated at:
+* **Windows:** `src-tauri/target/release/bundle/nsis/InScript Indic Typing Tutor_1.0.0_x64-setup.exe` & `.msi`
+* **Linux:** `src-tauri/target/release/bundle/deb/` & `.AppImage`
+* **macOS:** `src-tauri/target/release/bundle/dmg/`
+
+### 🤖 Automated GitHub Actions Desktop Releases
+
+Desktop installers for **Windows (.exe, .msi)**, **macOS (.dmg)**, and **Linux (.deb, .AppImage)** are automatically compiled and published as GitHub Releases using the included workflow:
+* Push a tag (e.g. `git tag v1.0.0 && git push origin v1.0.0`) or trigger via the **Actions** tab with "Run workflow".
+* Workflow file: [`.github/workflows/release-desktop.yml`](.github/workflows/release-desktop.yml)
 
 ---
 

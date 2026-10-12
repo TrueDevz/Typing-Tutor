@@ -1,0 +1,85 @@
+name: Release Desktop App (Tauri)
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: 'windows-latest'
+            args: ''
+          - platform: 'ubuntu-22.04'
+            args: ''
+          - platform: 'macos-latest'
+            args: ''
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
+      - name: Install dependencies (Ubuntu only)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Build Tauri Desktop Application & Installer
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: 'InScript Indic Typing Tutor v__VERSION__'
+          releaseBody: |
+            ## 🚀 InScript Indic Typing Tutor Desktop Release v__VERSION__
+
+            Official high-performance offline desktop application built with Tauri v2.
+            
+            ### ✨ Features:
+            - 100% Offline touch typing tutor (Zero internet required)
+            - 11 Indian Languages + English
+            - Full InScript and Phonetic typing support
+            - Biomechanical finger position guides & virtual keyboard
+            - 3 Arcade games: Speed Racer, Meteor Defense, Word Rain
+            - Real-time personal analytics & weak keys trainer
+            
+            ### 📦 Installers:
+            - **Windows**: `.msi` and `.exe` (NSIS setup installer)
+            - **Linux**: `.deb` and `.AppImage`
+            - **macOS**: `.dmg` (Universal binary for Intel & Apple Silicon)
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.args }}
