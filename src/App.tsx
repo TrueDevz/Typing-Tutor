@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Keyboard, BookOpen, BarChart3, HelpCircle, Gamepad2, Video, Heart } from 'lucide-react';
+import { Keyboard, BookOpen, BarChart3, HelpCircle, Gamepad2, Video, Heart, Info, Mail } from 'lucide-react';
 
 import type { SupportedLanguage, Lesson } from './types';
 import { LESSONS } from './data/lessons';
@@ -10,12 +10,22 @@ import { LanguageSelector } from './components/LanguageSelector';
 import { CustomLessonModal } from './components/CustomLessonModal';
 import { WordRainGame } from './components/WordRainGame';
 import { InteractiveTutorial } from './components/InteractiveTutorial';
+import { AboutPage } from './components/AboutPage';
+import { ContactPage } from './components/ContactPage';
+import { LegalPage } from './components/LegalPage';
 import { loadUserProgress, recordLessonCompletion } from './utils/storage';
 
 
 export const App: React.FC = () => {
   const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>('english');
-  const [activeTab, setActiveTab] = useState<'arena' | 'curriculum' | 'game' | 'tutorial' | 'stats' | 'help'>('arena');
+  const [activeTab, setActiveTab] = useState<'arena' | 'curriculum' | 'game' | 'tutorial' | 'stats' | 'help' | 'about' | 'contact' | 'legal'>('arena');
+  const [legalSubTab, setLegalSubTab] = useState<'privacy' | 'terms' | 'licenses'>('privacy');
+
+  const handleOpenLegal = (tab: 'privacy' | 'terms' | 'licenses') => {
+    setLegalSubTab(tab);
+    setActiveTab('legal');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const [userProgress, setUserProgress] = useState(loadUserProgress);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
@@ -162,6 +172,28 @@ export const App: React.FC = () => {
           >
             <HelpCircle className="w-4 h-4" /> InScript Guide
           </button>
+
+          <button
+            onClick={() => setActiveTab('about')}
+            className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold border-b-2 transition cursor-pointer whitespace-nowrap shrink-0 ${
+              activeTab === 'about'
+                ? 'border-indigo-500 text-indigo-400'
+                : 'border-transparent text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Info className="w-4 h-4" /> About
+          </button>
+
+          <button
+            onClick={() => setActiveTab('contact')}
+            className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold border-b-2 transition cursor-pointer whitespace-nowrap shrink-0 ${
+              activeTab === 'contact'
+                ? 'border-indigo-500 text-indigo-400'
+                : 'border-transparent text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <Mail className="w-4 h-4" /> Contact
+          </button>
         </div>
       </header>
 
@@ -258,32 +290,78 @@ export const App: React.FC = () => {
             </div>
           </div>
         )}
+        {activeTab === 'about' && <AboutPage />}
+
+        {activeTab === 'contact' && <ContactPage />}
+
+        {activeTab === 'legal' && <LegalPage initialTab={legalSubTab} />}
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-slate-900 bg-slate-950/60 py-6 px-4 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-center gap-1.5 text-center sm:text-left">
-            <span>InScript Indic Typing Tutor</span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-current inline" /> for Indian Language Typists
-            </span>
+      <footer className="w-full border-t border-slate-900 bg-slate-950/80 py-8 px-4 mt-auto">
+        <div className="max-w-7xl mx-auto flex flex-col gap-6 text-xs text-slate-500">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <div className="h-7 w-7 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-black text-xs shadow-md shadow-indigo-600/30">
+                IT
+              </div>
+              <div>
+                <span className="text-white font-bold text-sm tracking-tight block">InScript Indic Typing Tutor</span>
+                <span className="text-slate-500 text-[11px]">Bureau of Indian Standards (IS 16350:2016)</span>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-medium">
+              <button
+                onClick={() => { setActiveTab('about'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                className="text-slate-400 hover:text-indigo-400 transition cursor-pointer"
+              >
+                About
+              </button>
+              <button
+                onClick={() => { setActiveTab('contact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                className="text-slate-400 hover:text-indigo-400 transition cursor-pointer"
+              >
+                Contact & Support
+              </button>
+              <button
+                onClick={() => handleOpenLegal('privacy')}
+                className="text-slate-400 hover:text-indigo-400 transition cursor-pointer"
+              >
+                Privacy Policy
+              </button>
+              <button
+                onClick={() => handleOpenLegal('terms')}
+                className="text-slate-400 hover:text-indigo-400 transition cursor-pointer"
+              >
+                Terms of Service
+              </button>
+              <button
+                onClick={() => handleOpenLegal('licenses')}
+                className="text-slate-400 hover:text-indigo-400 transition cursor-pointer"
+              >
+                Licenses & Attributions
+              </button>
+              <a
+                href="https://github.com/TrueDevz/Typing-Tutor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-slate-400 hover:text-white transition font-semibold"
+              >
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="text-slate-600 hidden sm:inline">Bureau of Indian Standards (InScript)</span>
-            <a
-              href="https://github.com/TrueDevz/Typing-Tutor"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-slate-400 hover:text-white transition font-medium"
-            >
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-              GitHub
-            </a>
+          <div className="pt-4 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-[11px]">
+            <p>© 2026 InScript Indic Typing Tutor. Open Source MIT License.</p>
+            <p className="flex items-center gap-1">
+              Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-current inline" /> for Indian Language typists across the world
+            </p>
           </div>
         </div>
       </footer>
