@@ -73,14 +73,6 @@ export const TypingArena: React.FC<TypingArenaProps> = ({
     }
   }, [soundEnabled]);
 
-  // Reset arena state when lesson changes
-  useEffect(() => {
-    setTyped('');
-    setStartTime(null);
-    setElapsedTime(0);
-    setIsFinished(false);
-    setErrorsCount(0);
-  }, [lesson]);
 
   // Real-time timer
   useEffect(() => {

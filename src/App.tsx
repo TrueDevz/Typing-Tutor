@@ -38,6 +38,14 @@ export const App: React.FC = () => {
     setUserProgress(updated);
   };
 
+  const handleNextLesson = () => {
+    const langLessons = LESSONS.filter((l: Lesson) => l.language === currentLanguage);
+    const currentIndex = langLessons.findIndex((l: Lesson) => l.id === currentLesson.id);
+    if (currentIndex !== -1 && currentIndex + 1 < langLessons.length) {
+      setCurrentLesson(langLessons[currentIndex + 1]);
+    }
+  };
+
   const handleCustomLessonSubmit = (title: string, content: string) => {
     const customLesson: Lesson = {
       id: `custom-${Date.now()}`,
@@ -161,10 +169,11 @@ export const App: React.FC = () => {
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6">
         {activeTab === 'arena' && (
           <TypingArena
+            key={`${currentLesson.id}-${currentLanguage}`}
             lesson={currentLesson}
             language={currentLanguage}
             onComplete={handleLessonComplete}
-            onReset={() => {}}
+            onReset={handleNextLesson}
           />
         )}
 
