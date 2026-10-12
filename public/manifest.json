@@ -1,0 +1,17 @@
+{
+  "short_name": "TypingTutor",
+  "name": "InScript Indic Typing Tutor",
+  "description": "Master Touch Typing in Indian Languages and English using Government InScript keyboard layout",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#020617",
+  "theme_color": "#4f46e5",
+  "display": "standalone",
+  "orientation": "landscape-primary"
+}
