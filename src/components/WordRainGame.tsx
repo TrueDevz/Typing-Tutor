@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import type { SupportedLanguage } from '../types';
+import { GAME_VOCABULARY } from '../data/gameWords';
 import { getMappedCharFromEvent } from '../utils/typingEngine';
 import { Play, RotateCcw, Volume2, VolumeX, ShieldAlert, Award, Rocket } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -15,47 +16,6 @@ interface FallingWord {
   y: number;          // percentage from top: 0% to 90%
   speed: number;      // fall speed per tick
 }
-
-const VOCABULARY: Record<SupportedLanguage, string[]> = {
-  english: [
-    'focus', 'speed', 'swift', 'clean', 'quick', 'touch', 'power', 'skill',
-    'rhythm', 'master', 'stream', 'bright', 'rocket', 'falcon', 'galaxy',
-    'vector', 'matrix', 'stride', 'energy', 'future', 'action', 'motion'
-  ],
-  telugu: [
-    'సాధన', 'వేగం', 'నైపుణ్యం', 'వెలుగు', 'భారత్', 'తెలుగు', 'శక్తి',
-    'జ్ఞానం', 'విజయం', 'ప్రగతి', 'సమయం', 'లక్ష్యం', 'కళ్యాణ్', 'ప్రేమ'
-  ],
-  hindi: [
-    'सफलता', 'प्रयास', 'साधना', 'शक्ति', 'जीवन', 'लक्ष्य', 'प्रकाश',
-    'भारत', 'ज्ञान', 'कर्म', 'उमंग', 'तरंग', 'उत्साह', 'प्रगति'
-  ],
-  tamil: [
-    'வெற்றி', 'முயற்சி', 'வேகம்', 'ஆற்றல்', 'தமிழ்', 'உழைப்பு',
-    'நம்பிக்கை', 'அறிவு', 'வாழ்க்கை', 'இலக்கு', 'திறமை'
-  ],
-  kannada: [
-    'ಸಾಧನೆ', 'ವೇಗ', 'ಶಕ್ತಿ', 'ಜ್ಞಾನ', 'ಕನ್ನಡ', 'ಗುರಿ', 'ಪ್ರಗತಿ', 'ಬೆಳಕು'
-  ],
-  bengali: [
-    'সাফল্য', 'পরিশ্রম', 'গতি', 'বাংলা', 'জ্ঞান', 'শক্তি', 'লক্ষ্য', 'স্বপ্ন'
-  ],
-  marathi: [
-    'सराव', 'वेग', 'ध्येय', 'यश', 'मराठी', 'आत्मविश्वास', 'प्रगती', 'ऊर्जा'
-  ],
-  gujarati: [
-    'સફળતા', 'પરિશ્રમ', 'ઝડપ', 'ગુજરાતી', 'લક્ષ્ય', 'શક્તિ', 'પ્રગતિ'
-  ],
-  malayalam: [
-    'വിജയം', 'പരിശ്രമം', 'വേഗത', 'ശക്തി', 'മലയാളം', 'ലക്ഷ്യം'
-  ],
-  punjabi: [
-    'ਮਿਹਨਤ', 'ਗਤੀ', 'ਸਫਲਤਾ', 'ਪੰਜਾਬੀ', 'ਸ਼ਕਤੀ', 'ਨਿਸ਼ਾਨਾ'
-  ],
-  odia: [
-    'ସଫଳତା', 'ପରିଶ୍ରମ', 'ଗତି', 'ଓଡ଼ିଆ', 'ଶକ୍ତି', 'ଲକ୍ଷ୍ୟ'
-  ],
-};
 
 export const WordRainGame: React.FC<WordRainGameProps> = ({ language }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -112,7 +72,7 @@ export const WordRainGame: React.FC<WordRainGameProps> = ({ language }) => {
     } catch {}
   }, [soundEnabled]);
 
-  const wordBank = VOCABULARY[language] || VOCABULARY.english;
+  const wordBank = GAME_VOCABULARY[language] || GAME_VOCABULARY.english;
 
   // Start game
   const startGame = () => {

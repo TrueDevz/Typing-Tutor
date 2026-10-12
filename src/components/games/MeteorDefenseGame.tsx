@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import type { SupportedLanguage } from '../../types';
 import { getMappedCharFromEvent } from '../../utils/typingEngine';
+import { GAME_VOCABULARY } from '../../data/gameWords';
 import { Play, RotateCcw, Volume2, VolumeX, Shield, Award, Flame, Zap, Target } from 'lucide-react';
 
 interface MeteorDefenseGameProps {
@@ -15,45 +16,6 @@ interface Meteor {
   speed: number;
   size: number;
 }
-
-const METEOR_WORDS: Record<SupportedLanguage, string[]> = {
-  english: [
-    'star', 'laser', 'orbit', 'plasma', 'meteor', 'shield', 'galaxy', 'rocket',
-    'comet', 'engine', 'pulsar', 'nebula', 'cosmos', 'photon', 'atomic', 'vector'
-  ],
-  telugu: [
-    'తార', 'నిప్పు', 'శక్తి', 'గ్రహం', 'వేగం', 'వెలుగు', 'లక్ష్యం', 'ధ్వని',
-    'ఆకాశం', 'సూర్యుడు', 'చంద్రుడు', 'గగనం', 'కిరణం', 'జ్వాల', 'శౌర్యం'
-  ],
-  hindi: [
-    'तारा', 'अग्नि', 'शक्ति', 'ग्रह', 'प्रकाश', 'धनुष', 'किरण', 'सौर',
-    'आकाश', 'विमान', 'गगन', 'ज्वाला', 'उल्का', 'परमाणु', 'अंबर'
-  ],
-  tamil: [
-    'விண்மீன்', 'நெருப்பு', 'ஆற்றல்', 'வேகம்', 'ஒளி', 'வானம்', 'புயல்', 'கதிர்'
-  ],
-  kannada: [
-    'ತಾರೆ', 'ಬೆಂಕಿ', 'ಶಕ್ತಿ', 'ವೇಗ', 'ಬೆಳಕು', 'ಆಕಾಶ', 'ಕಿರಣ', 'ಉಲ್ಕೆ'
-  ],
-  bengali: [
-    'তারা', 'অগ্নি', 'শক্তি', 'গতি', 'আলো', 'আকাশ', 'কিরণ', 'উল্কা'
-  ],
-  marathi: [
-    'तारा', 'अग्नी', 'शक्ती', 'वेग', 'प्रकाश', 'आकाश', 'ज्वाला', 'उल्का'
-  ],
-  gujarati: [
-    'તારો', 'અગ્નિ', 'શક્તિ', 'ઝડપ', 'પ્રકાશ', 'આકાશ', 'કિરણ', 'તેજ'
-  ],
-  malayalam: [
-    'താരം', 'തീ', 'ശക്തി', 'വേഗത', 'വെളിച്ചം', 'ആകാശം', 'കിരണം'
-  ],
-  punjabi: [
-    'ਤਾਰਾ', 'ਅੱਗ', 'ਸ਼ਕਤੀ', 'ਗਤੀ', 'ਚਾਨਣ', 'ਅਸਮਾਨ', 'ਕਿਰਨ'
-  ],
-  odia: [
-    'ତାରା', 'ଅଗ୍ନି', 'ଶକ୍ତି', 'ଗତି', 'ଆଲୋକ', 'ଆକାଶ', 'କିରଣ'
-  ],
-};
 
 export const MeteorDefenseGame: React.FC<MeteorDefenseGameProps> = ({ language }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -70,7 +32,7 @@ export const MeteorDefenseGame: React.FC<MeteorDefenseGameProps> = ({ language }
   const containerRef = useRef<HTMLDivElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
 
-  const wordList = METEOR_WORDS[language] || METEOR_WORDS.english;
+  const wordList = GAME_VOCABULARY[language] || GAME_VOCABULARY.english;
 
   // Sound effects
   const playSfx = useCallback((type: 'laser' | 'explosion' | 'alarm') => {
@@ -309,7 +271,7 @@ export const MeteorDefenseGame: React.FC<MeteorDefenseGameProps> = ({ language }
       </div>
 
       {/* Main Space Arena */}
-      <div className="relative w-full h-[450px] bg-gradient-to-b from-[#030712] via-[#0b0f19] to-[#020617] rounded-3xl border border-cyan-500/20 overflow-hidden shadow-2xl flex flex-col justify-between p-6">
+      <div className="relative w-full h-[460px] bg-gradient-to-b from-[#030712] via-[#0b0f19] to-[#020617] rounded-3xl border border-cyan-500/20 overflow-hidden shadow-2xl flex flex-col justify-between p-6">
         {/* Starfield particles */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/20 via-transparent to-transparent pointer-events-none" />
 
@@ -381,7 +343,7 @@ export const MeteorDefenseGame: React.FC<MeteorDefenseGameProps> = ({ language }
 
         {/* Start Game Overlay */}
         {!isPlaying && !isGameOver && (
-          <div className="absolute inset-0 z-30 bg-black/75 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center gap-4">
+          <div className="absolute inset-0 z-30 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center gap-4 animate-fade-in">
             <div className="p-4 rounded-3xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 shadow-lg shadow-cyan-500/20">
               <Target className="w-12 h-12" />
             </div>
@@ -400,7 +362,7 @@ export const MeteorDefenseGame: React.FC<MeteorDefenseGameProps> = ({ language }
 
         {/* Game Over Modal */}
         {isGameOver && (
-          <div className="absolute inset-0 z-30 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center gap-4">
+          <div className="absolute inset-0 z-30 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center gap-4 animate-fade-in">
             <div className="p-4 rounded-3xl bg-rose-500/10 border border-rose-500/30 text-rose-400">
               <Award className="w-12 h-12" />
             </div>
