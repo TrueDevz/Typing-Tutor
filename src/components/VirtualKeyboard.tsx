@@ -70,7 +70,7 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
                   onClick={() => onKeyClick?.(key.code, keyChar)}
                   className={`
                     relative h-12 sm:h-14 ${widthClass} rounded-lg flex flex-col justify-between p-1 cursor-pointer
-                    transition-all duration-100 ease-out font-sans border
+                    transition-all duration-100 ease-out font-['Anek_Telugu'] border
                     ${isPressed
                       ? 'bg-amber-400 text-slate-950 border-amber-300 scale-95 shadow-lg shadow-amber-400/50'
                       : isHighlighted
@@ -83,11 +83,11 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
                 >
                   {/* Top: Shift character or Secondary character */}
                   <div className="flex justify-between items-start text-[10px] sm:text-xs font-medium leading-none">
-                    <span className="opacity-60 text-slate-400">
+                    <span className="opacity-60 text-slate-400 font-mono">
                       {key.label.includes(' ') ? key.label.split(' ')[1] : ''}
                     </span>
                     {inscriptChars?.shift && (
-                      <span className={`font-semibold ${isHighlighted && targetNeedsShift ? 'text-amber-300 font-bold scale-110' : 'text-slate-300'}`}>
+                      <span className={`font-semibold font-['Anek_Telugu'] text-xs sm:text-sm ${isHighlighted && targetNeedsShift ? 'text-amber-300 font-bold scale-110' : 'text-slate-300'}`}>
                         {inscriptChars.shift}
                       </span>
                     )}
@@ -98,7 +98,7 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
                     <span className="text-[10px] text-slate-500 font-mono">
                       {key.label.split(' ')[0]}
                     </span>
-                    <span className={`text-sm sm:text-base font-bold ${isHighlighted && !targetNeedsShift ? 'text-white' : 'text-slate-100'}`}>
+                    <span className={`text-sm sm:text-base font-bold font-['Anek_Telugu'] ${isHighlighted && !targetNeedsShift ? 'text-white' : 'text-slate-100'}`}>
                       {inscriptChars ? inscriptChars.normal : ''}
                     </span>
                   </div>

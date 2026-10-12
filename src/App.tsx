@@ -11,7 +11,7 @@ import { LessonSelector } from './components/LessonSelector';
 import { StatsDashboard } from './components/StatsDashboard';
 import { LanguageSelector } from './components/LanguageSelector';
 import { CustomLessonModal } from './components/CustomLessonModal';
-import { WordRainGame } from './components/WordRainGame';
+import { GamesHub } from './components/games/GamesHub';
 import { InteractiveTutorial } from './components/InteractiveTutorial';
 import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
@@ -20,7 +20,7 @@ import { Footer } from './components/Footer';
 import { loadUserProgress, recordLessonCompletion } from './utils/storage';
 
 export const App: React.FC = () => {
-  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>('telugu');
+  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>('english');
   const [activeTab, setActiveTab] = useState<
     'arena' | 'curriculum' | 'game' | 'tutorial' | 'stats' | 'help' | 'about' | 'contact' | 'legal'
   >('arena');
@@ -29,8 +29,8 @@ export const App: React.FC = () => {
   const [userProgress, setUserProgress] = useState(loadUserProgress);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
 
-  // Current selected lesson (default to Telugu first or English)
-  const defaultLessonForLang = LESSONS.find((l: Lesson) => l.language === 'telugu') || LESSONS[0];
+  // Current selected lesson (default to English first)
+  const defaultLessonForLang = LESSONS.find((l: Lesson) => l.language === 'english') || LESSONS[0];
   const [currentLesson, setCurrentLesson] = useState<Lesson>(defaultLessonForLang);
 
   // When language changes, update default active lesson
@@ -116,9 +116,6 @@ export const App: React.FC = () => {
             <div>
               <h1 className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-2">
                 InScript Indic Typing Tutor
-                <span className="hidden sm:inline-block text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
-                  Government Standard
-                </span>
               </h1>
               <p className="text-[11px] text-slate-400">Master Indian Languages & English Touch Typing</p>
             </div>
@@ -197,7 +194,7 @@ export const App: React.FC = () => {
                 : 'border-transparent text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Gamepad2 className="w-4 h-4" /> Word Rain Game
+            <Gamepad2 className="w-4 h-4" /> Typing Games Arcade
           </button>
 
           <button
@@ -273,7 +270,7 @@ export const App: React.FC = () => {
         )}
 
         {activeTab === 'game' && (
-          <WordRainGame language={currentLanguage} />
+          <GamesHub language={currentLanguage} />
         )}
 
         {activeTab === 'curriculum' && (

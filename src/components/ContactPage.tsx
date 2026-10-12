@@ -32,7 +32,7 @@ const FAQS: FaqItem[] = [
   },
   {
     question: 'Does this platform support phonetic (transliteration) typing as well?',
-    answer: 'Yes! While InScript is the government standard, we also include an integrated Phonetic Typing mode where you can type roman letters (e.g. "namaste") and view corresponding Indic syllables.',
+    answer: 'Yes! While InScript is the official layout standard, we also include an integrated Phonetic Typing mode where you can type roman letters (e.g. "namaste") and view corresponding Indic syllables.',
   },
 ];
 

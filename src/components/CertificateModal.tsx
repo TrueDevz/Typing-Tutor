@@ -187,7 +187,7 @@ export const CertificateModal: React.FC<CertificateModalProps> = ({
     ctx.font = 'bold 15px system-ui, sans-serif';
     ctx.fillText('★ INSCRIPT ★', 0, 5);
     ctx.font = '11px system-ui, sans-serif';
-    ctx.fillText('GOVT STANDARD', 0, 26);
+    ctx.fillText('OFFICIAL LAYOUT', 0, 26);
     ctx.restore();
 
     // Signatures & Metadata (Bottom Right)

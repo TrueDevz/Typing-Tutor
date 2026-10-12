@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('game')}
                   className="hover:text-indigo-400 transition cursor-pointer text-left"
                 >
-                  Word Rain Arcade Game
+                  Typing Games Arcade (3 Games)
                 </button>
               </li>
               <li>
@@ -178,7 +178,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <Shield className="w-3 h-3" /> 100% Client-Side Private
             </span>
             <span>•</span>
-            <span>Government Standard Layout</span>
+            <span>InScript Layout Standard</span>
           </div>
         </div>
       </div>

@@ -53,15 +53,20 @@
   * **AP & TS State Government Typing Exam Model Passages**
 * Progressive lessons across Hindi, Tamil, Kannada, Bengali, and English.
 
-### 8. 📱 Interactive Virtual Keyboard & Biomechanical Finger Guides
-* Real-time virtual keyboard with InScript and QWERTY legends, finger color coding, and active shift indicators.
+### 8. 🎮 Multi-Arcade Typing Games Hub
+* **🌧️ Word Rain Arcade:** Survival typing test with falling vocabulary words, progressive speed ticks, and lives.
+* **🚀 Meteor Typo Defense:** Planetary orbital defense game where typing words charges orbital laser cannons to blast incoming meteors.
+* **🏎️ Speed Nitro Racer:** High-octane 1000m drag racing sprint against an AI rival where typing words ignites nitrous boosters!
+
+### 9. 📱 Interactive Virtual Keyboard with Anek Telugu Typography
+* Explicit **Anek Telugu** Google Font integration for ultra-crisp regional character display on all keyboard keys.
 * **On-Screen Tap Typing:** Touch or click virtual keys to type directly on touchscreens and tablets.
 * Interactive 2D SVG hands guide displaying anatomical finger postures *(disabled by default for clean focus, toggleable with one click)*.
 
-### 9. 🎨 Theme Switcher
+### 10. 🎨 Theme Switcher
 * Switch between aesthetic UI themes: **Midnight Slate**, **Cyberpunk Neon**, **Matrix Terminal**, and **Light Mode**.
 
-### 10. 📄 Complete Information, Contact & Legal Documentation
+### 11. 📄 Complete Information, Contact & Legal Documentation
 * **About Us:** Platform mission, C-DAC InScript architecture, and language coverage.
 * **Contact & FAQ:** Interactive inquiry form and comprehensive FAQs covering Windows 11 keyboard activation and conjunct typing.
 * **Legal & Privacy:** Full Privacy Policy compliant with India's DPDP Act 2023 & GDPR, Terms of Service, and BIS IS 1408:2000 standard attributions.
