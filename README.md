@@ -1,35 +1,174 @@
-# Typing-Tutor
+# InScript Indic Typing Tutor ⌨️🇮🇳
 
-A modern, comprehensive Touch Typing Tutor Web Application supporting **English** and **10 Indian Languages** (*Telugu, Hindi, Tamil, Kannada, Bengali, Marathi, Gujarati, Malayalam, Punjabi, Odia*) using the Government standard **InScript** keyboard layout.
+> A modern, high-performance, and privacy-respecting Touch Typing Platform engineered for **English** and **10 Indian Languages** (*Telugu, Hindi, Tamil, Kannada, Bengali, Marathi, Gujarati, Malayalam, Punjabi, Odia*). Adheres strictly to the Government of India's official **InScript (IS 1408:2000)** standard by C-DAC and Bureau of Indian Standards (BIS).
 
-## 🚀 Features
+[![License: MIT](https://img.shields.io/badge/License-MIT-indigo.svg)](https://opensource.org/licenses/MIT)
+[![React 19](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.3-purple.svg)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-v4-teal.svg)](https://tailwindcss.com/)
+[![Privacy: Zero Logging](https://img.shields.io/badge/Privacy-100%25%20Local-emerald.svg)](#-privacy--zero-logging-guarantee)
 
-- **Indic InScript Keyboard Engine**: Direct translation of standard QWERTY input to official InScript layouts without needing OS language packs configured.
-- **Hands & Finger Guidance**: Interactive animated 2D hands displaying anatomical finger posture and key elevations.
-- **Finger Animation Tutorial**: Step-by-step video-style demonstration teaching home row anchors and key reaches.
-- **Word Rain Arcade Game**: Arcade-style typing mini-game with falling words, progressive difficulty, lives, and synthesizer sound effects.
-- **Structured Curriculum**: Progressive modules from Beginner (Home row) to Intermediate (Matras / Guninthalu) and Advanced (Conjuncts & Speed Tests).
-- **Custom Text Practice**: Ability to practice custom articles and paragraphs.
-- **Real-time Analytics**: Tracks WPM, accuracy %, elapsed time, and stores records in `localStorage`.
-- **Anek Telugu Default Typography**: Google Fonts integration for crisp Indic scripts.
+---
 
-## 🛠️ Built With
+## 🌟 Key Highlights & Features
 
-- React 19 + TypeScript
-- Vite
-- Tailwind CSS v4
-- Lucide React Icons
-- Canvas Confetti & Web Audio API
+### 1. ⏱️ Timed Speed Test Modes
+* Practice with customizable test timers: **Full Passage**, **30 Seconds**, **1 Minute (60s)**, **2 Minutes (120s)**, and **5 Minutes (300s - Official Govt Recruitment Benchmark)**.
+* Live countdown timer with automatic completion and real-time net WPM/accuracy computation.
 
-## 💻 Getting Started
+### 2. 🤖 Ghost Racer / Target Pace Bot
+* Compete against a simulated pace car with target speeds: **Off**, **25 WPM**, **40 WPM**, or **60 WPM**.
+* Real-time dual progress track comparing your keystroke position with live lead feedback (e.g. `+4 words ahead`).
+
+### 3. 📜 Official High-Resolution Speed Certificate Generator
+* Download crisp, high-resolution **1600x1000 PNG Certificates** generated directly on an HTML5 canvas.
+* Includes custom candidate name, verified WPM score, accuracy %, performance tier rank (*Grandmaster, Master, Professional*), date, and official InScript certification seal.
+* One-click summary copy to clipboard for sharing on LinkedIn, WhatsApp, or resumes.
+
+### 4. 🎯 Weak Keys Heatmap & Targeted Practice Drills
+* Automatic per-character mistype tracking stored in client-side storage.
+* Visual heatmap highlighting troublesome characters with error counts.
+* **"Practice Weak Keys Now"** button instantly synthesizes focused accuracy drills targeting your most problematic keys.
+* Full **Export JSON**, **Import JSON**, and **Reset Progress** data management tools.
+
+### 5. 🔊 Web Audio Mechanical Keyboard Sound Synthesizer
+* Pure offline synthesis with realistic audio profiles:
+  * **Cherry MX Blue** (Crisp tactile snap)
+  * **Mechanical Thock** (Deep resonant bottom-out)
+  * **Vintage Typewriter** (Metallic strike)
+  * **Bubble Pop** (Playful fluid pop)
+  * **Simple Beep** & **Silent**
+
+### 6. 🔤 Dual Input Engine: InScript & Phonetic Transliteration
+* **InScript Mode:** Native keyboard layout mapping for official government typing examinations.
+* **Phonetic Mode:** Type romanized English letters (e.g., `namaste` or `k` for `క`) with live phonetic key cheat-sheet hints.
+
+### 7. 📚 Rich Indic Curriculum & Govt Exam Passages
+* Specialized exercises for Telugu:
+  * **హోమ్ రో అక్షరాలు** (Home row basics)
+  * **గుణింతాల ప్రాక్టీస్** (తలకట్టు, దీర్ఘం, గుడి, కొమ్ము, ఎత్వం, ఐత్వం...)
+  * **ద్విత్వాక్షరాలు మరియు ఒత్తులు** (అమ్మ, నాన్న, అక్క, చెల్లి...)
+  * **సంయుక్తాక్షరాలు** (శక్తి, భక్తి, విద్యా, చక్రం...)
+  * **AP & TS State Government Typing Exam Model Passages**
+* Progressive lessons across Hindi, Tamil, Kannada, Bengali, and English.
+
+### 8. 📱 Interactive Virtual Keyboard & Biomechanical Finger Guides
+* Real-time virtual keyboard with InScript and QWERTY legends, finger color coding, and active shift indicators.
+* **On-Screen Tap Typing:** Touch or click virtual keys to type directly on touchscreens and tablets.
+* Interactive 2D SVG hands guide displaying anatomical finger postures *(disabled by default for clean focus, toggleable with one click)*.
+
+### 9. 🎨 Theme Switcher
+* Switch between aesthetic UI themes: **Midnight Slate**, **Cyberpunk Neon**, **Matrix Terminal**, and **Light Mode**.
+
+### 10. 📄 Complete Information, Contact & Legal Documentation
+* **About Us:** Platform mission, C-DAC InScript architecture, and language coverage.
+* **Contact & FAQ:** Interactive inquiry form and comprehensive FAQs covering Windows 11 keyboard activation and conjunct typing.
+* **Legal & Privacy:** Full Privacy Policy compliant with India's DPDP Act 2023 & GDPR, Terms of Service, and BIS IS 1408:2000 standard attributions.
+
+---
+
+## 🌐 Supported Languages (11+ Scripts)
+
+| Language | Script | Native Script | Primary Exam Use Cases |
+| :--- | :--- | :--- | :--- |
+| **English** | Latin | English | SSC, Banking, Corporate, UPSC |
+| **Telugu** | Telugu | తెలుగు | APPSC, TSPSC, District Courts, State Secretariat |
+| **Hindi** | Devanagari | हिन्दी | SSC CGL/CHSL, Railways RRB, UPSSSC, DSSSB |
+| **Tamil** | Tamil | தமிழ் | TNPSC, High Court, State Govt Exams |
+| **Kannada** | Kannada | ಕನ್ನಡ | KPSC, High Court, Revenue Dept |
+| **Bengali** | Bengali | বাংলা | WBPSC, High Court, Postal Recruitment |
+| **Marathi** | Devanagari | मराठी | MPSC, GCC-TBC Typing Exams |
+| **Gujarati** | Gujarati | ગુજરાતી | GPSSB, High Court, Secretariat Exams |
+| **Malayalam** | Malayalam | മലയാളം | Kerala PSC, KSRTC, Secretariat |
+| **Punjabi** | Gurmukhi | ਪੰਜਾਬੀ | PSSSB, High Court Recruitment |
+| **Odia** | Odia | ଓଡ଼ିଆ | OSSC, OSSSC Exams |
+
+---
+
+## 💡 How InScript Typing Works
+
+The InScript layout is uniform across all Indian languages:
+* **Left Hand (Vowels & Matras):** `A`, `S`, `D`, `F`, `G` provide vowel diacritics (normal) and full vowels (with Shift).
+* **Right Hand (Consonants):** `H`, `J`, `K`, `L`, `;` provide primary consonants; aspirated forms use Shift.
+* **The Halant / Virama (`D` Key):** 
+  To create conjunct consonants (ఒత్తులు / संयुक्ताक्षर), type **Consonant + D + Consonant**:
+  * Telugu: క + D + క = **క్క**
+  * Telugu: త + D + ర = **త్ర**
+  * Hindi: क + D + ष = **क्ष**
+  * Tamil: க + D + க = **க்க**
+
+---
+
+## 🔒 Privacy & Zero-Logging Guarantee
+
+InScript Indic Typing Tutor is engineered with an **Offline-First, Zero-Telemetry** architecture:
+* **No Keystroke Logging:** Your typing strokes never leave your browser window.
+* **Local Storage Sandbox:** All metrics (WPM, accuracy, weak keys) are stored solely in your local browser sandbox.
+* **Zero Tracking Cookies or Analytics:** No third-party trackers or advertising beacons.
+* Compliant with India's **Digital Personal Data Protection (DPDP) Act 2023** and **GDPR**.
+
+---
+
+## 🛠️ Technology Stack
+
+* **Framework:** [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+* **Bundler & Tooling:** [Vite 8](https://vitejs.dev/) + [Oxlint](https://oxc-project.github.io/)
+* **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+* **Icons:** [Lucide React](https://lucide.dev/)
+* **Sound:** Web Audio API (Native Realtime Synthesizer)
+* **Effects:** HTML5 Canvas, Canvas Confetti
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* [Node.js](https://nodejs.org/) (v18 or higher recommended)
+* npm or pnpm
+
+### Installation
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/TrueDevz/Typing-Tutor.git
 
-# Install dependencies
+# 2. Enter directory
+cd Typing-Tutor
+
+# 3. Install dependencies
 npm install
 
-# Run the development server
+# 4. Start local development server
 npm run dev
 ```
+
+Visit `http://localhost:5173` in your browser.
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+The production output will be generated inside the `dist/` directory, ready to deploy to GitHub Pages, Vercel, Firebase Hosting, or Netlify.
+
+---
+
+## 🤝 Contributing
+
+Contributions are warmly welcome! Whether you are adding new lessons for regional languages, reporting keyboard mapping inconsistencies, or suggesting features:
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📜 License
+
+Distributed under the **MIT License**. See `LICENSE` or the [Legal Page](#) in the application for more information.
+
+Maintained with ❤️ by **[TrueDevz](https://github.com/TrueDevz)**.

@@ -9,6 +9,7 @@ interface VirtualKeyboardProps {
   targetKey: string | null;     // Physical code of character to type next
   targetNeedsShift: boolean;    // Whether next character requires Shift
   showFingerGuide: boolean;
+  onKeyClick?: (code: string, char: string) => void;
 }
 
 export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
@@ -17,6 +18,7 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
   targetKey,
   targetNeedsShift,
   showFingerGuide,
+  onKeyClick,
 }) => {
   const currentLayout = INSCRIPT_LAYOUTS[language] || INSCRIPT_LAYOUTS.english;
 
@@ -58,12 +60,16 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({
 
               // Size classes
               const widthClass = key.width || 'w-11 sm:w-14';
+              const keyChar = targetNeedsShift && inscriptChars?.shift 
+                ? inscriptChars.shift 
+                : (inscriptChars?.normal || (key.code === 'Space' ? ' ' : key.label.split(' ')[0]));
 
               return (
                 <div
                   key={key.code}
+                  onClick={() => onKeyClick?.(key.code, keyChar)}
                   className={`
-                    relative h-12 sm:h-14 ${widthClass} rounded-lg flex flex-col justify-between p-1
+                    relative h-12 sm:h-14 ${widthClass} rounded-lg flex flex-col justify-between p-1 cursor-pointer
                     transition-all duration-100 ease-out font-sans border
                     ${isPressed
                       ? 'bg-amber-400 text-slate-950 border-amber-300 scale-95 shadow-lg shadow-amber-400/50'

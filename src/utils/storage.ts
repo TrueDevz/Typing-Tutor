@@ -20,6 +20,7 @@ const DEFAULT_PROGRESS: UserProgress = {
   },
   totalTimeTrainedSeconds: 0,
   testsTaken: 0,
+  mistypedChars: {},
   recentResults: [],
 };
 
@@ -27,7 +28,12 @@ export function loadUserProgress(): UserProgress {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_PROGRESS;
-    return { ...DEFAULT_PROGRESS, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    return {
+      ...DEFAULT_PROGRESS,
+      ...parsed,
+      mistypedChars: parsed.mistypedChars || {},
+    };
   } catch (err) {
     console.error('Failed to load user progress:', err);
     return DEFAULT_PROGRESS;
@@ -47,13 +53,22 @@ export function recordLessonCompletion(
   lang: SupportedLanguage,
   wpm: number,
   accuracy: number,
-  duration: number
+  duration: number,
+  sessionErrors?: Record<string, number>
 ): UserProgress {
   const current = loadUserProgress();
   const completed = Array.from(new Set([...current.completedLessons, lessonId]));
 
   const bestWpm = Math.max(current.bestWpmByLanguage[lang] || 0, wpm);
   const updatedBest = { ...current.bestWpmByLanguage, [lang]: bestWpm };
+
+  // Merge mistyped characters
+  const updatedMistyped: Record<string, number> = { ...(current.mistypedChars || {}) };
+  if (sessionErrors) {
+    for (const [char, count] of Object.entries(sessionErrors)) {
+      updatedMistyped[char] = (updatedMistyped[char] || 0) + count;
+    }
+  }
 
   const newResult = {
     id: `${Date.now()}`,
@@ -71,9 +86,47 @@ export function recordLessonCompletion(
     bestWpmByLanguage: updatedBest,
     totalTimeTrainedSeconds: current.totalTimeTrainedSeconds + duration,
     testsTaken: current.testsTaken + 1,
+    mistypedChars: updatedMistyped,
     recentResults: [newResult, ...current.recentResults].slice(0, 20),
   };
 
   saveUserProgress(updated);
   return updated;
+}
+
+export function clearErrorHistory(): UserProgress {
+  const current = loadUserProgress();
+  const updated: UserProgress = {
+    ...current,
+    mistypedChars: {},
+  };
+  saveUserProgress(updated);
+  return updated;
+}
+
+export function resetAllProgress(): UserProgress {
+  saveUserProgress(DEFAULT_PROGRESS);
+  return DEFAULT_PROGRESS;
+}
+
+export function exportProgressJson(): string {
+  const progress = loadUserProgress();
+  return JSON.stringify(progress, null, 2);
+}
+
+export function importProgressJson(jsonStr: string): UserProgress | null {
+  try {
+    const parsed = JSON.parse(jsonStr);
+    if (typeof parsed !== 'object' || parsed === null) return null;
+    const progress: UserProgress = {
+      ...DEFAULT_PROGRESS,
+      ...parsed,
+      mistypedChars: parsed.mistypedChars || {},
+    };
+    saveUserProgress(progress);
+    return progress;
+  } catch (err) {
+    console.error('Failed to import user progress:', err);
+    return null;
+  }
 }

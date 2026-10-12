@@ -53,11 +53,16 @@ export interface TypingStats {
   charTimes: { char: string; timeMs: number }[];
 }
 
+export type SoundTheme = 'cherry' | 'thock' | 'typewriter' | 'bubble' | 'simple' | 'silent';
+
+export type AppTheme = 'slate' | 'cyberpunk' | 'matrix' | 'light';
+
 export interface UserProgress {
   completedLessons: string[]; // lesson IDs
   bestWpmByLanguage: Record<SupportedLanguage, number>;
   totalTimeTrainedSeconds: number;
   testsTaken: number;
+  mistypedChars?: Record<string, number>;
   recentResults: {
     id: string;
     date: string;
